@@ -3,18 +3,22 @@ from django.shortcuts import render, HttpResponse
 
 
 ITEMS = (
-    {'id': 1, 'name': 'Некий товар номер 1'},
-    {'id': 2, 'name': 'Некий товар номер 2'},
-    {'id': 3, 'name': 'Некий товар номер 3'},
-    {'id': 4, 'name': 'Некий товар номер 4'},
-    {'id': 5, 'name': 'Некий товар номер 5'},
+    {'id': 1, 'name': 'Некий товар номер 1', 'quantity': 1},
+    {'id': 2, 'name': 'Некий товар номер 2', 'quantity': 2},
+    {'id': 3, 'name': 'Некий товар номер 3', 'quantity': 0},
+    {'id': 4, 'name': 'Некий товар номер 4', 'quantity': 5},
+    {'id': 5, 'name': 'Некий товар номер 5', 'quantity': 50},
 )
 
 
 # Create your views here.
 def index(request):
-    name = 'Никитенко М.В.'
-    return HttpResponse(f'<h1>"Изучаем django"</h1><br><b>Автор</b>: <i>{name}</i>')
+    context = {
+        'name': 'Михаил',
+        'surname': 'Никитенко',
+        'hobbies': ['web-programming', 'AVR-programming', 'HAM radio', 'YouTube']
+    }
+    return HttpResponse(render(request, 'index.html', context))
 
 
 def about(request):
@@ -29,14 +33,11 @@ def about(request):
 
 
 def items(request):
-    return HttpResponse('<br>'.join([f"""{i}: <a href="/item/{item['id']}">{item['name']}</a>"""
-                                     for i, item in enumerate(ITEMS, start=1)]))
+    return HttpResponse(render(request, 'MainApp/items.html', {'items': ITEMS}))
 
 
 def item_details(request, pk):
     for item in ITEMS:
         if item['id'] == pk:
-            return HttpResponse(f"""{item['name']}<br><a href="/items">Назад к списку товаров</a>""")
-    # raise Http404   # По хорошему надо переопределять и использовать встроенный обработчик 404, но не сегодня,
-    # мы даже шаблоны сегодня ещё не используем, всему своё время
-    return HttpResponse(f'Товар с id:{pk} не найден<br><a href="/items">Назад к списку товаров</a>')
+            return HttpResponse(render(request, 'MainApp/item_detail.html', {'item': item}))
+    raise Http404
