@@ -1,14 +1,7 @@
 from django.http import Http404
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, get_object_or_404
 
-
-ITEMS = (
-    {'id': 1, 'name': 'Некий товар номер 1', 'quantity': 1},
-    {'id': 2, 'name': 'Некий товар номер 2', 'quantity': 2},
-    {'id': 3, 'name': 'Некий товар номер 3', 'quantity': 0},
-    {'id': 4, 'name': 'Некий товар номер 4', 'quantity': 5},
-    {'id': 5, 'name': 'Некий товар номер 5', 'quantity': 50},
-)
+from .models import Item
 
 
 # Create your views here.
@@ -33,11 +26,9 @@ def about(request):
 
 
 def items(request):
-    return HttpResponse(render(request, 'MainApp/items.html', {'items': ITEMS}))
+    return HttpResponse(render(request, 'MainApp/items.html', {'items': Item.objects.all()}))
 
 
 def item_details(request, pk):
-    for item in ITEMS:
-        if item['id'] == pk:
-            return HttpResponse(render(request, 'MainApp/item_detail.html', {'item': item}))
-    raise Http404
+    item = get_object_or_404(Item, pk=pk)
+    return HttpResponse(render(request, 'MainApp/item_detail.html', {'item': item}))
