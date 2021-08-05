@@ -1,21 +1,17 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-<h1>Welcome home good hunter</h1>
+{% extends 'base.html' %}
 
-<p>Автор: {{ surname }} {{ name }}</p>
+{% block title %}Home{% endblock %}
 
-<ul>
-    {% for hobbie in hobbies %}
-    <li> {{ hobbie }} </li>
-    {% endfor %}
-</ul>
+{% block content %}
+    <h1>Welcome home good hunter</h1>
 
-<p><a href="{% url 'items' %}">Список товаров</a></p>
+    <p>Автор: {{ surname }} {{ name }}</p>
 
-</body>
-</html>
+    <ul>
+        {% for hobbie in hobbies %}
+        <li> {{ hobbie }} </li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{% url 'items' %}">Список товаров</a></p>
+{% endblock %}
