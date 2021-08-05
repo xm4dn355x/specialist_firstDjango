@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
-
 {% block title %}Home{% endblock %}
-
 {% block content %}
     <h1>Welcome home good hunter</h1>
 
@@ -14,4 +12,6 @@
     </ul>
 
     <p><a href="{% url 'items' %}">Список товаров</a></p>
+
+    {% include 'MainApp/includes/footer.html' %}
 {% endblock %}
