@@ -1,31 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <title>Items</title>
-</head>
-<body>
-<nav>
-    <a href="{% url 'index' %}">Главная</a> |
-    <a href="{% url 'items' %}">Товары</a>
-</nav>
+{% extends 'base.html' %}
 
-<h1>Товары</h1>
+{% block title %}Items{% endblock %}
 
+{% block content %}
+    <nav>
+        <a href="{% url 'index' %}">Главная</a> |
+        <a href="{% url 'items' %}">Товары</a>
+    </nav>
 
-{% for item in items %}
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">{{ item.name }} {{ item.brand }}</h5>
-            <p class="card-text">{{ item.description }}</p>
-            <a href="/item/{{ item.id }}" class="btn btn-primary">Открыть описание товара</a>
+    <h1>Товары</h1>
+
+    {% for item in items %}
+        <div class="item-card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ item.name }} {{ item.brand }}</h5>
+                <p class="card-text">{{ item.description }}</p>
+                <a href="/item/{{ item.id }}" class="btn btn-primary">Открыть описание товара</a>
+            </div>
         </div>
-    </div>
-{% endfor %}
+    {% endfor %}
 
-<p><a href="{% url 'index' %}">Вернуться на главную</a></p>
-
-</body>
-</html>
+    <p><a href="{% url 'index' %}">Вернуться на главную</a></p>
+{% endblock %}
