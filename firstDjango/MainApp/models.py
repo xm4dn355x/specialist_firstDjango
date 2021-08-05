@@ -6,6 +6,7 @@ from django.db.models import Model, CharField, PositiveIntegerField, TextField
 
 class Item(Model):
     name = CharField(max_length=100)
+    brand = CharField(max_length=50, default="")
     quantity = PositiveIntegerField()
     description = TextField(default="")
 
